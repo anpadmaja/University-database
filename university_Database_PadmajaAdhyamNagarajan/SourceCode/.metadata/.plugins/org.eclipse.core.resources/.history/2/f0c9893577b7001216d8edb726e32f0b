@@ -1,0 +1,92 @@
+package Servlets;
+
+import java.io.IOException;
+import java.io.PipedOutputStream;
+
+import java.util.StringTokenizer;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Services.UniversityServiceProxy;
+
+/**
+ * Servlet implementation class LoginServlet
+ */
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		//Validations 
+		boolean valid = true;
+		if(username.length() == 11){			
+			int token[] = {3,2,4};
+			int tokenCount = 0;
+			StringTokenizer st = new StringTokenizer(username, "-");
+			while (st.hasMoreElements()) {
+				String tokenString = (String) st.nextElement();
+				if(tokenString.length() == (token[tokenCount])){
+					try	{
+						Integer.parseInt(tokenString);
+					}
+					catch(Exception e){valid = false;}
+				}
+				else {
+					valid = false;
+				}
+				tokenCount++;
+			}
+			if(tokenCount != 3){
+				valid = false;
+			}
+		}
+		else{
+			valid = false;
+		}
+		
+		
+		
+		if(valid == true){
+			Services.UniversityServiceProxy proxy = new UniversityServiceProxy();
+			proxy.setEndpoint("http://localhost:8081/UniversityRecordSystem/services/UniversityService");
+			String result = proxy.getLoginDetails(username,password);
+			System.out.println(result);
+			if(!result.equals("HDJD")){
+				System.out.println("Success");
+				response.getWriter().write(result);
+			}
+			else{
+				System.out.println("Unsuccess");
+				response.getWriter().write("SUCCESS");
+			}
+		}
+		else{
+			System.out.println("new Unsuccess");
+			response.getWriter().write("SUCCESS");
+		}
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+}

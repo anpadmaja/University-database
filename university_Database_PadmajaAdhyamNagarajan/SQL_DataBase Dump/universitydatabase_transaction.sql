@@ -1,0 +1,62 @@
+CREATE DATABASE  IF NOT EXISTS `universitydatabase` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `universitydatabase`;
+-- MySQL dump 10.13  Distrib 5.6.11, for Win64 (x86_64)
+--
+-- Host: localhost    Database: universitydatabase
+-- ------------------------------------------------------
+-- Server version	5.6.11
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `transaction`
+--
+
+DROP TABLE IF EXISTS `transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `transaction` (
+  `transactionId` int(11) NOT NULL AUTO_INCREMENT,
+  `personId` int(11) DEFAULT NULL,
+  `amount` double NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `creditOrDebit` char(1) NOT NULL,
+  `bankAccountNum` varchar(45) DEFAULT NULL,
+  `creditCardNum` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`transactionId`),
+  UNIQUE KEY `transactionId_UNIQUE` (`transactionId`),
+  KEY `person_idx` (`personId`),
+  CONSTRAINT `person` FOREIGN KEY (`personId`) REFERENCES `person` (`personId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transaction`
+--
+
+LOCK TABLES `transaction` WRITE;
+/*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+INSERT INTO `transaction` VALUES (6,123456790,1212,'2010-01-01','00:00:09','C','12345678','1234567812345678'),(7,123456791,2345,'2010-01-01','00:00:10','D','12345678','1234567812345678'),(8,123456792,1233,'2010-01-01','00:00:11','C','12345678','1234567812345678'),(9,123456793,2090,'2010-01-01','00:00:12','D','12345678','1234567812345678'),(10,123456794,2000,'2010-01-01','00:00:12','C','12345678','1234567812345678');
+/*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-05-08 23:48:56
